@@ -1,7 +1,9 @@
 import {Link, useNavigate} from "react-router-dom";
 import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+
 import { useState } from "react";
 export default function Signup() {
+
   const navigate = useNavigate()
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
@@ -80,6 +82,7 @@ export default function Signup() {
                <div>
                  <Label value="Your password" />
                  <TextInput type="password" placeholder="Password" id="password"onChange={handleChange} />
+               
                </div>
                <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
                   {
