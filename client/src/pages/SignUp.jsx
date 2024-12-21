@@ -1,11 +1,20 @@
 import {Link, useNavigate} from "react-router-dom";
 import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 import { useState } from "react";
 export default function Signup() {
 
+  // for showing pwd
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    username:"",
+    email:"",
+    password:"",
+  });
+   // destructuring
+   const {username, email, password} = formData;
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false)
   
@@ -73,15 +82,26 @@ export default function Signup() {
              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                <div>
                  <Label value="Your username" />
-                 <TextInput type="text" placeholder="Username" id="username" onChange={handleChange}/>
+                 <TextInput value={username} type="text" placeholder="Username" id="username" onChange={handleChange}/>
                </div>
                <div>
                  <Label value="Your email" />
-                 <TextInput type="email" placeholder="name@company.com" id="email"onChange={handleChange} />
+                 <TextInput value={email} type="email" placeholder="name@company.com" id="email"onChange={handleChange} />
                </div>
-               <div>
+               <div className="relative">
                  <Label value="Your password" />
-                 <TextInput type="password" placeholder="Password" id="password"onChange={handleChange} />
+                 <TextInput value={password} type={showPassword ? "text": "password"} placeholder="Password" id="password"onChange={handleChange} />
+               
+               
+                 {
+                  showPassword ? (<AiFillEyeInvisible className='absolute 
+                    right-3 bottom-3 text-xl cursor-pointer' onClick={() =>setShowPassword((prevState)=>!prevState)} />
+
+                  ) : (
+                  <AiFillEye className='absolute right-3 bottom-3 
+                   text-xl cursor-pointer' onClick={() =>setShowPassword((prevState)=>!prevState)} />)
+                }
+               
                
                </div>
                <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>

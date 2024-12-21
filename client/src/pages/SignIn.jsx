@@ -1,14 +1,21 @@
 
 import {Link, useNavigate} from "react-router-dom";
 import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import {signInStart, signInSuccess, signInFailure} from '../redux/user/userSlice'
 
 export default function SignIn() {
-
+  // for showing pwd
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    email:"",
+    password:"",
+  });
+  // destructuring
+  const {email, password} = formData;
   const {loading, error:errorMessage} = useSelector((state) => state.user)
 // useDispatch so as to dispatch signInStart, signInSuccess, signInFailure
   const dispatch = useDispatch()
@@ -76,11 +83,20 @@ export default function SignIn() {
                
                <div>
                  <Label value="Your email" />
-                 <TextInput type="email" placeholder="name@company.com" id="email"onChange={handleChange} />
+                 <TextInput value={email} type="email" placeholder="name@company.com" id="email"onChange={handleChange} />
                </div>
-               <div>
+               <div className="relative">
                  <Label value="Your password" />
-                 <TextInput type="password" placeholder="***********" id="password"onChange={handleChange} />
+                 <TextInput  value={password} type={showPassword ? "text": "password"}  placeholder="***********" id="password"onChange={handleChange} />
+
+                 {
+                  showPassword ? (<AiFillEyeInvisible className='absolute 
+                    right-3 bottom-3 text-xl cursor-pointer' onClick={() =>setShowPassword((prevState)=>!prevState)} />
+
+                  ) : (
+                  <AiFillEye className='absolute right-3 bottom-3 
+                   text-xl cursor-pointer' onClick={() =>setShowPassword((prevState)=>!prevState)} />)
+                }
                
                </div>
                <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
