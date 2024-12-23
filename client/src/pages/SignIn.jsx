@@ -1,4 +1,5 @@
 
+import OAuth from "../components/OAuth"
 import {Link, useNavigate} from "react-router-dom";
 import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
@@ -109,6 +110,7 @@ export default function SignIn() {
                     ) :  ('Sign In'
                   )}
                </Button>
+               <OAuth />
              </form>
              <div className="flex gap-2 mt-5 text-sm">
               <span>Dont have an account?</span>
