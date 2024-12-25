@@ -2,6 +2,7 @@
 
 export default function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div className="min-h-screen mt-20"> Dashboard</div>
+   
   )
 }
