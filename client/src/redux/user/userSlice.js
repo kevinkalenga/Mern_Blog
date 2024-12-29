@@ -28,9 +28,22 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        updateStart: (state) => {
+           state.loading = true;
+           state.error = null
+        },
+        updateSuccess: (state, action) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        updateFailure: (state, action) => {
+           state.loading = false;
+           state.error = action.payload;
+        }
     }
 })
 // use the logic in our signin page
-export const {signInStart, signInSuccess, signInFailure} = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailure, updateStart, updateSuccess, updateFailure} = userSlice.actions;
 // export the reducer so as to add to the store and we can change it name in the store(userReducer)
 export default userSlice.reducer;
