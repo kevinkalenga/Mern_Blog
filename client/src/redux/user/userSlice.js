@@ -53,6 +53,11 @@ const userSlice = createSlice({
         deleteUserFailure:(state, action) => {
            state.loading = false;
            state.error = action.payload;
+        },
+        signoutSuccess: (state) => {
+            state.currentUser = null;
+            state.error = null;
+            state.loading = false
         }
     }
 })
@@ -67,6 +72,7 @@ export const {
     deleteUserStart,
     deleteUserSuccess,
     deleteUserFailure,
+    signoutSuccess
 } = userSlice.actions;
 // export the reducer so as to add to the store and we can change it name in the store(userReducer)
 export default userSlice.reducer;
