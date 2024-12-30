@@ -1,4 +1,5 @@
 import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {TextInput, Button, Alert, Modal} from 'flowbite-react';
 import { useState, useRef, useEffect } from 'react';
 import {getStorage, ref,   getDownloadURL, uploadBytesResumable} from 'firebase/storage';
@@ -20,7 +21,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 export default function DashProfile() {
   const dispatch = useDispatch();
-  const {currentUser, error} = useSelector((state) => state.user);
+  const {currentUser, error, loading} = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -226,9 +227,29 @@ service firebase.storage {
         <TextInput type="email" id="email" placeholder="email"
            defaultValue={currentUser.email} onChange={handleChange}/>
         <TextInput type="password" id="password" placeholder="password" onChange={handleChange}/>
-        <Button type="submit" gradientDuoTone='purpleToBlue' outline>
-           Update
+        <Button 
+             type="submit" 
+             gradientDuoTone='purpleToBlue' 
+             outline
+             disabled={loading || imageFileUploading}
+             >
+           {
+            loading ? 'Loading...' : 'Update'
+           }
         </Button>
+        {
+          currentUser.isAdmin && (
+            <Link to={'/create-post'}>
+                <Button 
+                  type="button"
+                  gradientDuoTone='purpleToPink'
+                  className='w-full'
+                 >
+                   Create a post
+                </Button>
+              </Link>
+          )
+        }
       </form>
       <div className='flex justify-between text-red-500 mt-5'>
          <span onClick={() =>setShowModal(true)} className='cursor-pointer'>Delete Account</span>
