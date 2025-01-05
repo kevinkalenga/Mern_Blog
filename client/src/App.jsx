@@ -12,6 +12,8 @@ import Dashboard from './pages/Dashboard';
 import CreatePost from "./pages/CreatePost";
 
 
+
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -28,6 +30,7 @@ export default function App() {
            <Route path="/create-post" element={<CreatePost />} />
         </Route>
         <Route path="/projects" element={<Projects />} />
+        
       </Routes>
       <Footer />
     </BrowserRouter>
