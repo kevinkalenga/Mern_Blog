@@ -13,6 +13,7 @@ module.exports = {
     // ...
     flowbite.plugin(),
     require('tailwind-scrollbar'),
+    require('@tailwindcss/line-clamp'),
   ],
 };
 // /** @type {import('tailwindcss').Config} */
