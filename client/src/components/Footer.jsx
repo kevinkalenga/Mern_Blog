@@ -37,7 +37,7 @@ export default function FooterCom() {
                 50 JS PROJECTS
               </Footer.Link>
               <Footer.Link
-                href='https://mern-blog-95c8.onrender.com/'
+                href='https://proshop-qg1w.onrender.com/'
                 target='_blank'
 
               >
