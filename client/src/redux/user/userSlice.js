@@ -6,17 +6,17 @@ const initialState = {
     error: null,
     loading: false
 }
-// kind of user reducer
+// kind of user reducer(create the userSlice)
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        // we start
+        // we start(sign in the user)
         signInStart: (state) => {
             state.loading = true;
             state.error = null;
         },
-        // we succed
+        // we succed(the action is the response that we get back)
         signInSuccess: (state, action) => {
             // payload is the user data
             state.currentUser = action.payload;

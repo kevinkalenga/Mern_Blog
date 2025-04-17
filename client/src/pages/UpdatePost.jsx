@@ -10,6 +10,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function UpdatePost() {
+  // the user that sign up
   const {currentUser} = useSelector((state) =>state.user);
   const navigate = useNavigate();
   const [file, setFile] = useState(null)
