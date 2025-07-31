@@ -30,10 +30,18 @@ export default function UpdatePost() {
             setPublishError(data.message)
             return;
           }
-          if(res.ok) {
-            setPublishError(null)
-            setFormData(data.posts[0])
+          // if(res.ok) {
+          //    setPublishError(null)
+          //    setFormData(data.posts[0])
+          // }
+
+          if (res.ok && data.posts && data.posts.length > 0) {
+             setFormData(data.posts[0]);
+             setPublishError(null);
+          } else {
+              setPublishError('Post not found.');
           }
+
         }
         fetchPost()
        } catch (error) {
@@ -80,6 +88,10 @@ export default function UpdatePost() {
 
   const handleSubmit = async(e) => {
    e.preventDefault();
+    if (!formData._id || formData._id.length !== 24) {
+    setPublishError('Invalid or missing post ID.');
+    return;
+  }
    try {
     const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
       method: 'PUT',

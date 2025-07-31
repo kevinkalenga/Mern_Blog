@@ -69,7 +69,9 @@ export const getposts = async (req, res, next) => {
 };
 
 export const deletepost = async (req, res, next) => {
-  
+  console.log('postId:', req.params.postId);
+  console.log('userId:', req.params.userId);
+
   const { postId, userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
@@ -88,7 +90,9 @@ export const deletepost = async (req, res, next) => {
 };
 
 export const updatepost = async (req, res, next) => {
-  
+    console.log('postId:', req.params.postId);
+    console.log('userId:', req.params.userId);
+
     const { postId, userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
@@ -101,7 +105,7 @@ export const updatepost = async (req, res, next) => {
   try {
     
     const updatedPost = await Post.findByIdAndUpdate(
-      // req.params.postId,
+      //  req.params.postId,
       postId,
       {
         $set: {
