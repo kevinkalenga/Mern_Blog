@@ -65,7 +65,7 @@ export default function Header() {
         Blog
       </span>
       Website
-    </Link>
+  </Link>
     <form onSubmit={handleSubmit}>
        <TextInput type='text' 
         placeholder='Search...'
