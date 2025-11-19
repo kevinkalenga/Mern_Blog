@@ -7,6 +7,7 @@ import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from "cookie-parser";
 import path from 'path';
+import { errorHandler } from "./utils/errors.js";
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ const app = express()
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(errorHandler)
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000')

@@ -91,7 +91,7 @@ export default function UpdatePost() {
     if (!formData._id || formData._id.length !== 24) {
     setPublishError('Invalid or missing post ID.');
     return;
-  }
+    }
    try {
     const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
       method: 'PUT',

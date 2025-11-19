@@ -14,6 +14,8 @@ import Dashboard from './pages/Dashboard';
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer} from "react-toastify"
 
 
 
@@ -22,6 +24,7 @@ export default function App() {
   return (
     <BrowserRouter>
     <ScrollToTop />
+      <ToastContainer />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
