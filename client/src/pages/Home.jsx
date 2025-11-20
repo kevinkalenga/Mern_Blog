@@ -1,66 +1,149 @@
-import {Link} from 'react-router-dom';
-import CallToAction from '../components/CallToAction'
+// import {Link} from 'react-router-dom';
+// import CallToAction from '../components/CallToAction'
+// import { useEffect, useState } from 'react';
+// import PostCard from '../components/PostCard';
+// export default function Home() {
+  
+//   const [posts, setPosts] = useState([]);
+  
+//   useEffect(() => {
+//     const fetchPosts = async () => {
+//       const res = await fetch('/api/post/getposts');
+//       const data = await res.json();
+//       setPosts(data.posts)
+//     }
+//     fetchPosts()
+//   }, [])
+  
+  
+  
+//   return (
+//     <div className="min-h-screen">
+//       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
+//          <h1 className="text-3xl font-bold 
+//             lg:text-6xl">
+//                Welcome to my Blog Website</h1>
+//          <p className="text-gray-500 text-xs sm:text-sm">
+//            Here you will find a variety of articles and tutorials on topics such 
+//            web development, sofware engineering, and programming languages.
+//          </p>
+
+//          <Link to="/search" className='text-xs sm:text-sm
+//            text-teal-500 font-bold hover:underline'>
+//              View all posts
+//           </Link>
+//       </div>
+//       <div className='p-3 bg-amber-100 dark:bg-slate-700'>
+//           <CallToAction />
+//       </div>
+//       {/* flex flex-col gap-6 */}
+//       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
+//         {posts && posts.length > 0 && (
+//           <div className=''>
+//             <h2 className='text-2xl font-semibold text-center my-10'>Recent Posts</h2>
+//             <div className='flex flex-wrap gap-4 justify-center'>
+//               {posts.map((post) => (
+//                 <PostCard key={post._id} post={post} />
+//               ))}
+//             </div>
+//             <div className='text-center mt-5'>
+//             <Link
+//               to={'/search'}
+//               className='text-lg text-teal-500 hover:underline text-center'
+//             >
+//               View all posts
+//             </Link>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+    
+    
+    
+    
+//     </div>
+//   )
+// }
+
+// /////////////////////////////////////////
+
+import { Link } from 'react-router-dom';
+import CallToAction from '../components/CallToAction';
 import { useEffect, useState } from 'react';
 import PostCard from '../components/PostCard';
+
 export default function Home() {
-  
   const [posts, setPosts] = useState([]);
-  
+  const [loading, setLoading] = useState(true); // track loading state
+  const [error, setError] = useState(null);     // track errors
+
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('/api/post/getPosts');
-      const data = await res.json();
-      setPosts(data.posts)
-    }
-    fetchPosts()
-  }, [])
-  
-  
-  
+      try {
+        const res = await fetch('/api/post/getposts');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        setPosts(data.posts || []); // fallback if posts missing
+      } catch (err) {
+        console.error('Failed to fetch posts:', err);
+        setError('Failed to load posts.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <div className="min-h-screen">
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
-         <h1 className="text-3xl font-bold 
-            lg:text-6xl">
-               Welcome to my Blog Website</h1>
-         <p className="text-gray-500 text-xs sm:text-sm">
-           Here you will find a variety of articles and tutorials on topics such 
-           web development, sofware engineering, and programming languages.
-         </p>
+        <h1 className="text-3xl font-bold lg:text-6xl">
+          Welcome to my Blog Website
+        </h1>
+        <p className="text-gray-500 text-xs sm:text-sm">
+          Here you will find a variety of articles and tutorials on topics such as
+          web development, software engineering, and programming languages.
+        </p>
+        <Link
+          to="/search"
+          className="text-xs sm:text-sm text-teal-500 font-bold hover:underline"
+        >
+          View all posts
+        </Link>
+      </div>
 
-         <Link to="/search" className='text-xs sm:text-sm
-           text-teal-500 font-bold hover:underline'>
-             View all posts
-          </Link>
+      <div className="p-3 bg-amber-100 dark:bg-slate-700">
+        <CallToAction />
       </div>
-      <div className='p-3 bg-amber-100 dark:bg-slate-700'>
-          <CallToAction />
-      </div>
-      {/* flex flex-col gap-6 */}
-      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
-        {posts && posts.length > 0 && (
-          <div className=''>
-            <h2 className='text-2xl font-semibold text-center my-10'>Recent Posts</h2>
-            <div className='flex flex-wrap gap-4 justify-center'>
+
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
+        {loading && <p className="text-center text-gray-500">Loading posts...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
+
+        {!loading && !error && posts.length === 0 && (
+          <p className="text-center text-gray-500">No posts found.</p>
+        )}
+
+        {!loading && posts.length > 0 && (
+          <div>
+            <h2 className="text-2xl font-semibold text-center my-10">Recent Posts</h2>
+            <div className="flex flex-wrap gap-4 justify-center">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
-            <div className='text-center mt-5'>
-            <Link
-              to={'/search'}
-              className='text-lg text-teal-500 hover:underline text-center'
-            >
-              View all posts
-            </Link>
+            <div className="text-center mt-5">
+              <Link
+                to="/search"
+                className="text-lg text-teal-500 hover:underline text-center"
+              >
+                View all posts
+              </Link>
             </div>
           </div>
         )}
       </div>
-    
-    
-    
-    
     </div>
-  )
+  );
 }
+

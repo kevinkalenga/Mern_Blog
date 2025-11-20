@@ -66,6 +66,7 @@ export const getposts = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
 };
 
 export const deletepost = async (req, res, next) => {
