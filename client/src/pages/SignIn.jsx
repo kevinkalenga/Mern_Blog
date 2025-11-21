@@ -1,11 +1,12 @@
 
 import OAuth from "../components/OAuth"
 import {Link, useNavigate} from "react-router-dom";
-import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+import {Button, Label, Spinner, TextInput} from 'flowbite-react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import {signInStart, signInSuccess, signInFailure} from '../redux/user/userSlice'
+import {toast} from 'react-toastify'
 
 export default function SignIn() {
   // for showing pwd
@@ -29,32 +30,72 @@ export default function SignIn() {
   }
   console.log(formData)
   
-   const handleSubmit = async(e) => {
-      e.preventDefault();
-      if(!formData.email || !formData.password) {
-        return dispatch(signInFailure('Please fill out all fields'))
-      }
-      try {
-        dispatch(signInStart())
-        const res = await fetch('/api/auth/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type':'application/json'
-          },
-          body: JSON.stringify(formData),
-        })
-        const data = await res.json();
-        if(data.success === false) {
-          dispatch(signInFailure(data.message))
-        }
-        if(res.ok) {
-          dispatch(signInSuccess(data))
-          navigate('/')
-        }
-      } catch (error) {
-        dispatch(signInFailure(error.message))
-      }
-   }
+  //  const handleSubmit = async(e) => {
+  //     e.preventDefault();
+  //     if(!formData.email || !formData.password) {
+  //       // return dispatch(signInFailure('Please fill out all fields'))
+  //        dispatch(signInFailure('Please fill out all fields'));
+  //        toast.error('Please fill out all fields');
+  //        setShowToast(true);
+  //        return;
+  //     }
+  //     try {
+  //       dispatch(signInStart())
+  //       const res = await fetch('/api/auth/signin', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type':'application/json'
+  //         },
+  //         credentials: "include",
+  //         body: JSON.stringify(formData),
+  //       })
+  //       const data = await res.json();
+  //       if(data.success === false) {
+  //         dispatch(signInFailure(data.message))
+  //       }
+  //       if(res.ok) {
+  //         dispatch(signInSuccess(data))
+  //         navigate('/')
+  //       }
+  //     } catch (error) {
+  //       dispatch(signInFailure(error.message))
+  //     }
+  //  }
+
+      const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.email || !formData.password) {
+    dispatch(signInFailure('Please fill out all fields'));
+    toast.error('Please fill out all fields');
+    return;
+  }
+
+  try {
+    dispatch(signInStart());
+    const res = await fetch('/api/auth/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // Afficher le message d’erreur du backend dans le toast
+      dispatch(signInFailure(data.message));
+      toast.error(data.message);
+    } else {
+      dispatch(signInSuccess(data));
+      navigate('/');
+    }
+  } catch (error) {
+    dispatch(signInFailure(error.message));
+    toast.error(error.message);
+  }
+};
+
   
   
   return (
@@ -118,13 +159,13 @@ export default function SignIn() {
                  Sign Up
               </Link>
              </div>
-             {
+             {/* {
                errorMessage && (
                  <Alert className="mt-5" color="failure">
                     {errorMessage}
                  </Alert>
                )
-             }
+             } */}
           </div>
        </div>
     </div>

@@ -1,6 +1,6 @@
 import OAuth from "../components/OAuth"
 import {Link, useNavigate} from "react-router-dom";
-import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+import { Button, Label, Spinner, TextInput} from 'flowbite-react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import {toast} from 'react-toastify'
 
@@ -32,6 +32,7 @@ export default function Signup() {
       e.preventDefault();
       if(!formData.username || !formData.email || !formData.password) {
         toast.error('Please fill out all fields')
+        return;
         // return setErrorMessage('Please fill out all fields')
       }
       try {
@@ -128,13 +129,13 @@ export default function Signup() {
                  Sign In
               </Link>
              </div>
-             {
+             {/* {
                errorMessage && (
                  <Alert className="mt-5" color="failure">
                     {errorMessage}
                  </Alert>
                )
-             }
+             } */}
           </div>
        </div>
     </div>

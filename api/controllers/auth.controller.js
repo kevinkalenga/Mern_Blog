@@ -51,6 +51,9 @@ export const signin = async(req, res, next) => {
         
         res.status(200).cookie('access_token', token, {
            httpOnly: true,
+            secure: true,         // obligatoire sur Render
+           sameSite: "none",     // obligatoire pour cross-site
+           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
         }).json(rest)
        
     } catch (error) {
