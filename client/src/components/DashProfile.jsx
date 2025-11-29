@@ -4,6 +4,7 @@ import {TextInput, Button, Alert, Modal} from 'flowbite-react';
 import { useState, useRef, useEffect } from 'react';
 import {getStorage, ref,   getDownloadURL, uploadBytesResumable} from 'firebase/storage';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import {toast} from 'react-toastify'
 import 'react-circular-progressbar/dist/styles.css';
 import {app} from '../firebase';
 import {
@@ -133,9 +134,12 @@ service firebase.storage {
       if (!res.ok) {
         dispatch(updateFailure(data.message));
         setUpdateUserError(data.message)
+        return toast.error(data.message);
+        
       } else {
         dispatch(updateSuccess(data));
-        setUpdateUserSuccess("User's profile updated successfully")
+        setUpdateUserSuccess()
+        toast.success("User's profile updated successfully");
        
       }
     } catch (error) {
@@ -172,6 +176,7 @@ service firebase.storage {
         console.log(data.message)
        } else {
         dispatch(signoutSuccess())
+        toast.success('Signout Successfully!');
        }
     } catch (error) {
       console.log(error.message);
@@ -255,7 +260,7 @@ service firebase.storage {
          <span onClick={() =>setShowModal(true)} className='cursor-pointer'>Delete Account</span>
          <span onClick={handleSignOut} className='cursor-pointer'>Sign Out</span>
       </div>
-      {
+      {/* {
         updateUserSuccess && (
           <Alert color='success' className='mt-5'>
              {updateUserSuccess}
@@ -275,7 +280,7 @@ service firebase.storage {
              {error}
           </Alert>
         )
-      }
+      } */}
       <Modal 
          show={showModal}
          onClose={() => setShowModal(false)}

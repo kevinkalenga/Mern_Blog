@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { signoutSuccess } from '../redux/user/userSlice';
+import {toast} from 'react-toastify'
 export default function DashSidebar() {
   const {currentUser} = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function DashSidebar() {
         console.log(data.message)
        } else {
         dispatch(signoutSuccess());
-        
+        toast.success('Signout Successfully!');
        }
     } catch (error) {
       console.log(error.message);

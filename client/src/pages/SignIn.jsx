@@ -63,11 +63,11 @@ export default function SignIn() {
   //  }
 
       const handleSubmit = async (e) => {
-  e.preventDefault();
+          e.preventDefault();
 
   if (!formData.email || !formData.password) {
-    dispatch(signInFailure('Please fill out all fields'));
-    toast.error('Please fill out all fields');
+    dispatch(signInFailure());
+    toast.error('All fields are required');
     return;
   }
 
@@ -89,6 +89,7 @@ export default function SignIn() {
     } else {
       dispatch(signInSuccess(data));
       navigate('/');
+      toast.success('Login Successfully!');
     }
   } catch (error) {
     dispatch(signInFailure(error.message));

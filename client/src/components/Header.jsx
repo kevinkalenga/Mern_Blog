@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {toggleTheme} from '../redux/theme/themeSlice';
 import {signoutSuccess} from '../redux/user/userSlice';
 import { useEffect, useState } from 'react';
+import {toast} from 'react-toastify'
 
 
 export default function Header() {
@@ -40,6 +41,7 @@ export default function Header() {
        } else {
         dispatch(signoutSuccess());
         navigate('/sign-in')
+         toast.success('Signout Successfully!');
        }
     } catch (error) {
       console.log(error.message);

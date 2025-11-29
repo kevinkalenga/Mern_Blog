@@ -75,8 +75,8 @@ dotenv.config();
 
 mongoose
   .connect(process.env.MONGO)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB error:", err));
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error(" MongoDB error:", err));
 
 const app = express();
 const __dirname = path.resolve();
@@ -112,4 +112,4 @@ app.use((err, req, res, next) => {
 
 // --- START SERVER ---
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
